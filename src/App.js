@@ -1,25 +1,54 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { Button, Modal, ModalBody } from 'reactstrap';
 import './App.css';
 
+import Header from './Header';
+import Grid from './Grid';
+import Footer from './Footer';
+
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      modal: true,
+      player1: '',
+      computer: ''
+    };
+
+    this.toggleX = this.toggleX.bind(this);
+    this.toggleO = this.toggleO.bind(this);
+  }
+
+  toggleX() {
+    this.setState({
+      modal: !this.state.modal,
+      player1: 'X',
+      computer: 'O'
+    })
+  }
+
+  toggleO() {
+    this.setState({
+      modal: !this.state.modal,
+      player1: '0',
+      computer: 'X'
+    })
+  }
+
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div>
+        <Modal isOpen={this.state.modal} toggle={this.toggleX || this.toggleO} className={this.props.className}>
+          <ModalBody>
+            <span className="alert-text">X or O ?</span>{' '}
+            <Button onClick={this.toggleX}>X</Button>{' '}
+            <Button onClick={this.toggleO}>O</Button>
+          </ModalBody>
+        </Modal>
+        <Header />
+        <Grid player1={this.state.player1} computer={this.state.computer} />
+        <Footer />
       </div>
     );
   }
